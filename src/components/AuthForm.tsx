@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff, AlertCircle, CheckCircle2 } from "lucide-react";
 import  SocialProviders  from "@/components/SocialProviders";
+import { signIn, signUp } from "@/lib/auth/actions";
 
 export type AuthMode = "sign-in" | "sign-up";
 
@@ -21,6 +23,10 @@ export function AuthForm({
   className = "",
 }: AuthFormProps) {
   const isSignUp = mode === "sign-up";
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectParam = searchParams.get("redirect") || "/";
+  const callbackUrl = redirectParam.startsWith("/") ? redirectParam : "/";
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,6 +34,7 @@ export function AuthForm({
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   const resolvedTitle =
     title ?? (isSignUp ? "Join Brillivo Today!" : "Welcome Back to Brillivo");
@@ -37,48 +44,60 @@ export function AuthForm({
       ? "Create your account to start your fine jewelry collection"
       : "Sign in to access your saved pieces and private orders");
 
+  const oppositeHref = isSignUp
+    ? `/sign-in${callbackUrl !== "/" ? `?redirect=${encodeURIComponent(callbackUrl)}` : ""}`
+    : `/sign-up${callbackUrl !== "/" ? `?redirect=${encodeURIComponent(callbackUrl)}` : ""}`;
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrorMessage(null);
     setStatusMessage(null);
 
-    if (isSignUp && !fullName.trim()) {
-      setErrorMessage("Please enter your full name to continue.");
-      return;
-    }
+    startTransition(async () => {
+      const result = isSignUp
+        ? await signUp({
+            name: fullName.trim() || undefined,
+            email,
+            password,
+            callbackUrl,
+          })
+        : await signIn({
+            email,
+            password,
+            callbackUrl,
+          });
 
-    if (!email.trim()) {
-      setErrorMessage("Please enter a valid email address.");
-      return;
-    }
+      if (!result.ok) {
+        setErrorMessage(result.error);
+        return;
+      }
 
-    if (password.length < 8) {
-      setErrorMessage("Password must be at least 8 characters long.");
-      return;
-    }
-
-    setStatusMessage(
-      isSignUp
-        ? "UI preview: Your Brillivo collector profile is ready."
-        : "UI preview: Signed in to your Brillivo collector account."
-    );
+      setStatusMessage(
+        isSignUp
+          ? "Account created and guest bag synced. Redirecting..."
+          : "Signed in and guest bag synced. Redirecting..."
+      );
+      router.push(result.data.redirectTo);
+      router.refresh();
+    });
   };
 
-  const handleSocialPlaceholder = (provider: "google" | "apple") => {
+  const handleSocialProvider = (provider: "google" | "apple") => {
     setErrorMessage(null);
     const label = provider === "google" ? "Google" : "Apple";
-    setStatusMessage(`UI preview: ${label} authentication triggered.`);
+    setStatusMessage(`${label} OAuth is configured for post-MVP rollout.`);
   };
 
   return (
-    <div className={`w-full max-w-md mx-auto font-jost text-[var(--dark)] ${className}`}>
-      {/* Top Switch Prompt (Matches reference layout top line) */}
+    <div
+      className={`w-full max-w-md mx-auto font-jost text-[var(--dark)] ${className}`}
+    >
       <p className="text-center text-caption text-[var(--dark)]/70">
         {isSignUp ? (
           <>
             Already have an account?{" "}
             <Link
-              href="/sign-in"
+              href={oppositeHref}
               className="font-medium text-[var(--dark)] underline underline-offset-4 transition-colors hover:text-[var(--agua)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--agua)] rounded-sm"
             >
               Sign In
@@ -88,7 +107,7 @@ export function AuthForm({
           <>
             Don&apos;t have an account?{" "}
             <Link
-              href="/sign-up"
+              href={oppositeHref}
               className="font-medium text-[var(--dark)] underline underline-offset-4 transition-colors hover:text-[var(--agua)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--agua)] rounded-sm"
             >
               Sign Up
@@ -97,7 +116,6 @@ export function AuthForm({
         )}
       </p>
 
-      {/* Heading & Subtitle */}
       <div className="mt-7 text-center">
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--dark)]">
           {resolvedTitle}
@@ -107,12 +125,10 @@ export function AuthForm({
         </p>
       </div>
 
-      {/* Social Sign-In Providers (Google & Apple) */}
       <div className="mt-8">
-        <SocialProviders/>
+        <SocialProviders />
       </div>
 
-      {/* Accessible Error / Status Placeholders */}
       <div aria-live="polite" aria-atomic="true">
         {errorMessage && (
           <div
@@ -142,7 +158,6 @@ export function AuthForm({
         )}
       </div>
 
-      {/* Email / Password Form */}
       <form
         onSubmit={handleSubmit}
         noValidate
@@ -163,10 +178,11 @@ export function AuthForm({
               type="text"
               autoComplete="name"
               required
+              disabled={isPending}
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Enter your full name"
-              className="w-full rounded-xl border border-[var(--gray)] bg-[var(--light)] px-4 py-3.5 text-body text-[var(--dark)] placeholder:text-[var(--dark)]/40 transition-colors focus:border-[var(--agua)] focus:outline-none focus:ring-2 focus:ring-[var(--agua)]/30"
+              className="w-full rounded-xl border border-[var(--gray)] bg-[var(--light)] px-4 py-3.5 text-body text-[var(--dark)] placeholder:text-[var(--dark)]/40 transition-colors focus:border-[var(--agua)] focus:outline-none focus:ring-2 focus:ring-[var(--agua)]/30 disabled:opacity-60"
             />
           </div>
         )}
@@ -184,10 +200,11 @@ export function AuthForm({
             type="email"
             autoComplete="email"
             required
+            disabled={isPending}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="johndoe@gmail.com"
-            className="w-full rounded-xl border border-[var(--gray)] bg-[var(--light)] px-4 py-3.5 text-body text-[var(--dark)] placeholder:text-[var(--dark)]/40 transition-colors focus:border-[var(--agua)] focus:outline-none focus:ring-2 focus:ring-[var(--agua)]/30"
+            className="w-full rounded-xl border border-[var(--gray)] bg-[var(--light)] px-4 py-3.5 text-body text-[var(--dark)] placeholder:text-[var(--dark)]/40 transition-colors focus:border-[var(--agua)] focus:outline-none focus:ring-2 focus:ring-[var(--agua)]/30 disabled:opacity-60"
           />
         </div>
 
@@ -217,10 +234,11 @@ export function AuthForm({
               autoComplete={isSignUp ? "new-password" : "current-password"}
               required
               minLength={8}
+              disabled={isPending}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="minimum 8 characters"
-              className="w-full rounded-xl border border-[var(--gray)] bg-[var(--light)] py-3.5 pr-12 pl-4 text-body text-[var(--dark)] placeholder:text-[var(--dark)]/40 transition-colors focus:border-[var(--agua)] focus:outline-none focus:ring-2 focus:ring-[var(--agua)]/30"
+              className="w-full rounded-xl border border-[var(--gray)] bg-[var(--light)] py-3.5 pr-12 pl-4 text-body text-[var(--dark)] placeholder:text-[var(--dark)]/40 transition-colors focus:border-[var(--agua)] focus:outline-none focus:ring-2 focus:ring-[var(--agua)]/30 disabled:opacity-60"
             />
             <button
               type="button"
@@ -240,25 +258,31 @@ export function AuthForm({
 
         <button
           type="submit"
-          className="mt-2 w-full rounded-full bg-[var(--dark)] px-6 py-4 text-body-medium font-medium text-[var(--light)] transition-colors duration-200 hover:bg-[var(--agua)] hover:text-[var(--dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--agua)] focus-visible:ring-offset-2 cursor-pointer"
+          disabled={isPending}
+          className="mt-2 w-full rounded-full bg-[var(--dark)] px-6 py-4 text-body-medium font-medium text-[var(--light)] transition-colors duration-200 hover:bg-[var(--agua)] hover:text-[var(--dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--agua)] focus-visible:ring-offset-2 disabled:opacity-60 cursor-pointer"
         >
-          {isSignUp ? "Sign Up" : "Sign In"}
+          {isPending
+            ? isSignUp
+              ? "Creating Account..."
+              : "Signing In..."
+            : isSignUp
+            ? "Sign Up"
+            : "Sign In"}
         </button>
       </form>
 
-      {/* Legal Terms & Privacy Notice */}
       <p className="mt-6 text-center text-footnote text-[var(--dark)]/60">
         By {isSignUp ? "signing up" : "signing in"}, you agree to our{" "}
         <Link
           href="#terms-of-service"
-          className="underline underline-offset-2 transition-colors hover:text-[var(--agua)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--agua)]"
+          className="underline underline-offset-2 transition-colors hover:text-[var(--agua)]"
         >
           Terms of Service
         </Link>{" "}
         and{" "}
         <Link
           href="#privacy-policy"
-          className="underline underline-offset-2 transition-colors hover:text-[var(--agua)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--agua)]"
+          className="underline underline-offset-2 transition-colors hover:text-[var(--agua)]"
         >
           Privacy Policy
         </Link>
