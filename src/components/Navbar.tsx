@@ -152,6 +152,13 @@ export function Navbar({
             </button>
           )}
 
+          <Link
+            href="/sign-in"
+            className="text-body-medium text-[var(--dark)] transition-colors duration-200 hover:text-[var(--agua)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--agua)] focus-visible:ring-offset-4 rounded-sm"
+          >
+            Sign In
+          </Link>
+
           <button
             type="button"
             onClick={onCartClick}
@@ -234,6 +241,15 @@ export function Navbar({
           </form>
 
           <ul className="flex flex-col space-y-3" role="list">
+            <li>
+              <Link
+                href="/sign-in"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block py-1 text-body-medium font-medium text-[var(--agua)] transition-colors hover:text-[var(--dark)]"
+              >
+                Sign In / Join Brillivo
+              </Link>
+            </li>
             {links.map((item) => (
               <li key={item.label}>
                 <Link
