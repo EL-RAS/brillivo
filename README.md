@@ -1,186 +1,122 @@
 <div align="center">
   <br />
-    <a href="https://youtu.be/fZdTYswuZjU" target="_blank">
-      <img src="public/readme/Hero.jpg" alt="Project Banner">
-    </a>
+  <img src="public/readme/Hero.jpg" alt="Brillivo Sterling Silver Jewelry Banner" width="100%">
   <br />
 
+  <h2 align="center">Brillivo — Sterling Silver Jewelry E-Commerce</h2>
+  <p align="center">
+    Modern full-stack silver jewelry storefront built with Next.js, Drizzle ORM, Neon PostgreSQL, Better Auth, and Zustand.
+  </p>
+
   <div>
-    <img src="https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6"/>
-    <img alt="Static Badge" src="https://img.shields.io/badge/Devin AI-FFF?style=for-the-badge&logo=devin&logoColor=white">
-    <img src="https://img.shields.io/badge/-Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
-    <br/>
-    <img src="https://img.shields.io/badge/Next.js-000?style=for-the-badge&logo=next.js&logoColor=white">
-    <img src="https://img.shields.io/badge/-Better Auth-black?style=for-the-badge&logoColor=white&logo=betterauth&color=black"/>
-    <img src="https://img.shields.io/badge/-Drizzle-black?style=for-the-badge&logoColor=C5F74F&logo=drizzle&color=black"/>
-
+    <img src="https://img.shields.io/badge/Next.js-000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
+    <img src="https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/-Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
+    <br />
+    <img src="https://img.shields.io/badge/-Drizzle_ORM-black?style=for-the-badge&logoColor=C5F74F&logo=drizzle&color=black" alt="Drizzle ORM" />
+    <img src="https://img.shields.io/badge/Neon_PostgreSQL-00E599?style=for-the-badge&logo=postgresql&logoColor=black" alt="Neon PostgreSQL" />
+    <img src="https://img.shields.io/badge/-Better_Auth-black?style=for-the-badge&logoColor=white&color=111111" alt="Better Auth" />
+    <img src="https://img.shields.io/badge/-Zustand-black?style=for-the-badge&logoColor=white&color=222222" alt="Zustand" />
   </div>
-
-  <h3 align="center">Nike Ecommerce w/ Devin AI</h3>
-
-   <div align="center">
-     Build this project step by step with our detailed tutorial on <a href="https://www.youtube.com/watch?v=XUkNR-JfHwo" target="_blank"><b>JavaScript Mastery</b></a> YouTube. Join the JSM family!
-    </div>
 </div>
 
-## 📋 <a name="table">Table of Contents</a>
+<br />
 
-1. ✨ [Introduction](#introduction)
-2. ⚙️ [Tech Stack](#tech-stack)
-3. 🔋 [Features](#features)
-4. 🤸 [Quick Start](#quick-start)
-5. 🔗 [Assets](#links)
-6. 🚀 [More](#more)
+## 📋 Table of Contents
 
-## 🚨 Tutorial
+1. [Introduction](#introduction)
+2. [Features](#features)
+3. [Tech Stack](#tech-stack)
+4. [Quick Start](#quick-start)
+5. [Project Structure](#project-structure)
+6. [Database Schema](#database-schema)
 
-This repository contains the code corresponding to an in-depth tutorial available on our YouTube channel, <a href="" target="_blank"><b>JavaScript Mastery</b></a>.
+---
 
-If you prefer visual learning, this is the perfect resource for you. Follow our tutorial to learn how to build projects like these step-by-step in a beginner-friendly manner!
+## ✨ Introduction
 
-<a href="https://youtu.be/fZdTYswuZjU" target="_blank"><img src="https://github.com/sujatagunale/EasyRead/assets/151519281/1736fca5-a031-4854-8c09-bc110e3bc16d" /></a>
+**Brillivo** is a full-stack e-commerce web application crafted for a modern sterling silver jewelry brand. It features a clean editorial storefront, database-driven product catalog and dynamic reviews, seamless guest-to-user cart and wishlist merging upon sign-in, and a Cash on Delivery (COD) checkout flow backed by PostgreSQL.
 
-## <a name="introduction">✨ Introduction</a>
+---
 
-Nike-style eCommerce built with Devin AI, Next.js, Drizzle ORM, and Better Auth. In this project, you’ll master prompting as Devin helps generate sleek product pages powered by Next.js 15, TypeScript, and TailwindCSS. The backend runs on Neon PostgreSQL with Drizzle ORM, authentication is handled with Better Auth, and Zustand manages state — all packaged in a clean, modular UI to help you ship faster.
+## 🔋 Features
 
-If you're getting started and need assistance or face any bugs, join our active Discord community with over **50k+** members. It's a place where people help each other out.
+* **Editorial Landing Page**: Custom visual campaign banners (`Hero.jpg` and `Ring_banner.jpg`), curated collections, and a **Trending Now** showcase.
+* **Product Catalog & Product Details Page (PDP)**: Category navigation, search, variant/finish details, live average star ratings, review counts, and interactive review submission.
+* **Guest & Authenticated Cart + Wishlist**: Persistent cart and wishlist state powered by Zustand and PostgreSQL, with automatic guest-to-account merging on login.
+* **Cash on Delivery (COD) Checkout**: Shipping address form, live order summary synced with the shopping bag, transactional order creation, and order confirmation flow.
+* **Authentication**: Email/password and OAuth sign-up/sign-in powered by Better Auth with navbar session controls.
 
-<a href="https://discord.com/invite/n6EdbFJ" target="_blank"><img src="https://github.com/sujatagunale/EasyRead/assets/151519281/618f4872-1e10-42da-8213-1d69e486d02e" /></a>
+---
 
-## <a name="tech-stack">⚙️ Tech Stack</a>
+## ⚙️ Tech Stack
 
-- **[Better Auth](https://www.better-auth.com/)** is a framework-agnostic authentication and authorization library for TypeScript. It provides built-in support for email and password authentication, social sign-on (Google, GitHub, Apple, and more), and multi-factor authentication, simplifying user authentication and account management.
+* **[Next.js](https://nextjs.org/docs)** — App Router framework for server and client rendering, route handlers, and server actions.
+* **[TypeScript](https://www.typescriptlang.org/)** — Static typing across database queries, server actions, stores, and UI components.
+* **[Tailwind CSS](https://tailwindcss.com/)** — Utility-first styling tailored to Brillivo's visual system.
+* **[Drizzle ORM](https://orm.drizzle.team/)** — Type-safe SQL schema definitions and relational queries.
+* **[Neon](https://neon.com/)** — Serverless PostgreSQL database hosting.
+* **[Better Auth](https://www.better-auth.com/)** — Session management and user authentication.
+* **[Zustand](https://zustand-demo.pmnd.rs)** — Lightweight client-side state management for cart, wishlist, and UI state.
 
-- **[Devin AI](https://docs.devin.ai/get-started/devin-intro)** is an autonomous AI software engineer by Cognition Labs that independently plans, writes, debugs, and deploys full applications from natural language prompts. It integrates with tools like Slack, Linear, and Jira to manage tasks and pull requests, and learns new technologies on the fly by reading documentation.
+---
 
-- **[Drizzle ORM](https://orm.drizzle.team/)** is a lightweight and performant TypeScript ORM designed with developer experience in mind. It provides a seamless interface between application code and database operations while maintaining high performance and reliability.
+## 🤸 Quick Start
 
-- **[Neon](https://neon.com/)** is a fully managed, serverless PostgreSQL database platform. It offers features like instant provisioning, autoscaling, and database branching, enabling developers to build scalable applications without managing infrastructure.
+Follow these steps to run **Brillivo** locally:
 
-- **[Next.js](https://nextjs.org/docs)** is a powerful React framework for building full-stack web applications. It simplifies development with features like server-side rendering, static site generation, and API routes, enabling developers to focus on building products and shipping quickly.
+### Prerequisites
 
-- **[TailwindCSS](https://tailwindcss.com/)** is a utility-first CSS framework that allows developers to build custom, responsive designs quickly without leaving their HTML. It provides pre-defined classes for layout, typography, colors, and more.
+* [Git](https://git-scm.com/)
+* [Node.js](https://nodejs.org/en)
+* [npm](https://www.npmjs.com/)
 
-- **[TypeScript](https://www.typescriptlang.org/)** is a superset of JavaScript that adds static typing, providing better tooling, code quality, and error detection for developers. It is ideal for building large-scale applications and enhances the development experience.
-
-- **[Zustand](https://zustand-demo.pmnd.rs)** is a minimal, hook-based state management library for React. It lets you manage global state with zero boilerplate, no context providers, and excellent performance through selective state subscriptions.
-
-## <a name="features">🔋 Features</a>
-
-👉 **Landing Page**: A fast, engaging homepage that introduces your brand and products with smooth animations and clear calls to action.
-
-👉 **Product Listing Page**: Browse all products with filters, sorting, and real-time availability—powered by Devin AI-generated content for dynamic updates.
-
-👉 **Product Details Page**: Detailed product info, images, and reviews with AI-enhanced descriptions to help customers make confident buying decisions.
-
-👉 **Auth Pages**: Secure and seamless user signup, login, and password recovery using Better Auth, ensuring smooth access without backend hassles.
-
-And many more, including code architecture and reusability.
-
-## <a name="quick-start">🤸 Quick Start</a>
-
-Follow these steps to set up the project locally on your machine.
-
-**Prerequisites**
-
-Make sure you have the following installed on your machine:
-
-- [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/en)
-- [npm](https://www.npmjs.com/) (Node Package Manager)
-
-**Cloning the Repository**
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/JavaScript-Mastery-Pro/e-commerce.git
-cd e-commerce
-```
-
-**Installation**
-
-Install the project dependencies using npm:
-
-```bash
+git clone [https://github.com/EL-RAS/brillivo.git](https://github.com/EL-RAS/brillivo.git)
+cd brillivo
+2. Install Dependencies
 npm install
-```
-
-**Set Up Environment Variables**
-
-Create a new file named `.env` in the root of your project and add the following content:
-
-```env
-# Database
-DATABASE_URL="postgresql://username:password@host:port/database"
+3. Configure Environment Variables
+Create a .env file in the project root:
+# Database (Neon PostgreSQL)
+DATABASE_URL="postgresql://username:password@host:port/database?sslmode=require"
 
 # Better Auth
-BETTER_AUTH_SECRET="your-secret-key-here"
+BETTER_AUTH_SECRET="your-strong-random-secret"
 BETTER_AUTH_URL="http://localhost:3000"
 
-# GitHub OAuth (optional)
+# Optional OAuth Providers
 GITHUB_CLIENT_ID=""
 GITHUB_CLIENT_SECRET=""
-
-# Google OAuth (optional)
 GOOGLE_CLIENT_ID=""
 GOOGLE_CLIENT_SECRET=""
-```
-
-Replace the placeholder values with your credentials. You can get these by signing up at: [**NeonDB**](https://neon.com/), [**Better-Auth**](https://www.better-auth.com/).
-
-**Running the Project**
-
-```bash
+4. Push Schema & Start Development Server
+npx drizzle-kit push
 npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
-
-## 📁 Project Structure
-
-```
+Open http://localhost:3000 in your browser.
+📁 Project Structure
 src/
 ├── app/
-│   ├── api/auth/[...all]/route.ts  # Better Auth API routes
-│   └── page.tsx                    # Homepage
+│   ├── (root)/
+│   │   ├── page.tsx               # Landing page
+│   │   ├── products/              # Product listing & PDP routes
+│   │   ├── cart/                  # Shopping bag page
+│   │   ├── checkout/              # Cash on Delivery checkout & success pages
+│   │   └── wishlist/              # Saved items page
+│   ├── (auth)/                    # Sign-in & sign-up pages
+│   └── api/auth/[...all]/route.ts # Better Auth catch-all handler
+├── components/                    # Reusable UI components (Navbar, Reviews, etc.)
 ├── lib/
-│   ├── auth/
-│   │   └── index.ts               # Better Auth configuration
-│   └── db/
-│       ├── index.ts               # Database connection
-│       └── schema.ts              # Database schema
-└── store/
-    ├── auth.ts                    # Authentication state
-    └── cart.ts                    # Shopping cart state
-```
-
-## 🗄️ Database Schema
-
-The application includes the following tables:
-
-- **users**: User accounts and profiles
-- **sessions**: User sessions for Better Auth
-- **accounts**: OAuth accounts and credentials
-- **verifications**: Email verification tokens
-- **products**: Product catalog
-- **orders**: Customer orders
-- **order_items**: Individual items in orders
-
-## <a name="links">🔗 Assets</a>
-
-Assets and snippets used in the project can be found in the **[video kit](https://jsm.dev/nikecom-kit)**.
-
-<a href="https://jsm.dev/nikecom-kit" target="_blank">
-  <img src="public/readme/videokit.webp" alt="Video Kit Banner">
-</a>
-
-## <a name="more">🚀 More</a>
-
-**Advance your skills with Next.js Pro Course**
-
-Enjoyed creating this project? Dive deeper into our PRO courses for a richer learning adventure. They're packed with
-detailed explanations, cool features, and exercises to boost your skills. Give it a go!
-
-<a href="https://jsm.dev/nikecom-jsmpro" target="_blank">
-  <img src="public/readme/Ring_banner.jpg" alt="Project Banner">
-</a>
+│   ├── actions/                   # Server actions (cart, wishlist, reviews, orders)
+│   ├── auth/                      # Better Auth configuration
+│   └── db/                        # Drizzle DB client & schema definitions
+└── store/                         # Zustand stores (cart, wishlist)
+🗄️ Database Schema
+users, sessions, accounts, verifications — Authentication and user profiles
+products, product_variants — Silver jewelry catalog, pricing, and variants
+reviews — Customer star ratings and reviews
+carts, cart_items — Guest and authenticated shopping bags
+wishlists — Saved user/guest wishlist items
+addresses, orders, order_items — Shipping details and COD orders
