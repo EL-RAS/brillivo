@@ -1,7 +1,7 @@
 <div align="center">
   <br />
     <a href="https://youtu.be/fZdTYswuZjU" target="_blank">
-      <img src="public/readme/hero.webp" alt="Project Banner">
+      <img src="public/readme/Hero.jpg" alt="Project Banner">
     </a>
   <br />
 
@@ -182,5 +182,5 @@ Enjoyed creating this project? Dive deeper into our PRO courses for a richer lea
 detailed explanations, cool features, and exercises to boost your skills. Give it a go!
 
 <a href="https://jsm.dev/nikecom-jsmpro" target="_blank">
-  <img src="public/readme/jsmpro.webp" alt="Project Banner">
+  <img src="public/readme/Ring_banner.jpg" alt="Project Banner">
 </a>
